@@ -27,8 +27,8 @@
 
 <div align="center">
     <h2>🎉 Check out our latest work!<br>
-    <a href="https://swe-arena.com">🌟 SWE Arena 🌟</a><br>
-    <strong>🚀 Open Evaluation Platform on AI for Software Engineering 🚀<br>
+    <a href="https://arxiv.org/abs/2510.08697">🌟 BigCodeArena 🌟</a><br>
+    <strong>🚀 Open Evaluation Platform on AI for Vibe Coding 🚀<br>
     ✨ 100% free to use the latest frontier models! ✨</strong></h2>
 </div>
 
