@@ -29,14 +29,14 @@ def _ready_bigcodebench_path(subset="full", version="default") -> str:
     version = BIGCODEBENCH_VERSION if version == "default" else version
     url, path = get_dataset_metadata(version, subset)
 
-    # map subset sang split thực tế trên HF
-    hf_split = SUBSET_TO_HF_SPLIT.get(subset, subset)
-    extra = "-" + subset if subset not in SUBSET_TO_HF_SPLIT else ""
-    
-    dataset = load_dataset(BIGCODEBENCH_HF + extra, split=hf_split)
-    make_cache(url, dataset, path)
+    extra = "-" + subset if subset != "full" else ""
 
+    # load toàn bộ dataset, không dùng split HF
+    dataset = load_dataset(BIGCODEBENCH_HF + extra)
+
+    make_cache(url, dataset, path)
     return path
+
 
 
 def get_bigcodebench(err_incomplete=True, subset="full", version="default") -> Dict[str, Dict]:
