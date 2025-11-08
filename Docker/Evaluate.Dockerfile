@@ -45,6 +45,7 @@ RUN pip install \
     gradio-client \  
     numpy \  
     rich  
+
 RUN pip install -I --timeout 2000 -r https://raw.githubusercontent.com/hydra2025279/bigcodebench/refs/heads/main/Requirements/requirements-eval.txt
 
 # Ensure the numpy version is compatible with the datasets version

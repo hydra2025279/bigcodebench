@@ -41,13 +41,9 @@ RUN cd /bigcodebench && \
     appdirs>=1.4.4 \
     fire>=0.6.0 \
     multipledispatch>=0.6.0 \
-    pqdm>=0.2.0 \
     tempdir>=0.7.1 \
     termcolor>=2.0.0 \
     tqdm>=4.56.0 \
-    tree_sitter_languages>=1.10.2 \
-    tree-sitter==0.21.3 \
-    wget>=3.2 \
     gradio-client \
     rich
 
