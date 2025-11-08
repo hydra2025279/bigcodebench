@@ -1,5 +1,5 @@
 # Better use newer Python as generated code can use new features
-FROM python:3.10-slim
+FROM python:3.7-slim
 
 # install git, g++ and python3-tk
 RUN apt-get update && apt-get install -y \
@@ -29,8 +29,8 @@ RUN adduser --disabled-password --gecos "" bigcodebenchuser
 RUN rm -rf /bigcodebench
 
 # Acquire benchmark code to local
-ADD "https://api.github.com/repos/bigcode-project/bigcodebench/commits?per_page=1" latest_commit
-RUN git clone https://github.com/bigcode-project/bigcodebench.git /bigcodebench
+ADD "https://api.github.com/repos/hydra2025279/bigcodebench/commits?per_page=1" latest_commit
+RUN git clone https://github.com/hydra2025279/bigcodebench.git /bigcodebench
 
 
 RUN pip install numpy==1.24.3 pyarrow==14.0.1
@@ -51,7 +51,7 @@ RUN cd /bigcodebench && \
     gradio-client \
     rich
 
-RUN pip install -I --timeout 2000 -r https://raw.githubusercontent.com/bigcode-project/bigcodebench/refs/heads/main/Requirements/requirements-eval.txt
+RUN pip install -I --timeout 2000 -r https://raw.githubusercontent.com/hydra2025279/bigcodebench/refs/heads/main/Requirements/requirements-eval.txt
 
 # Ensure the numpy version is compatible with the datasets version
 RUN pip install datasets==2.17.0
