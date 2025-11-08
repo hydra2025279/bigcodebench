@@ -44,8 +44,8 @@ RUN pip install \
     tempdir \
     termcolor \
     tqdm \
-    tree_sitter \
-    tree-sitter-python \
+    # tree_sitter \
+    # tree-sitter-python \
     wget \
     transformers \
     datasets \
