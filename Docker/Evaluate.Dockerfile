@@ -36,29 +36,15 @@ RUN pip install numpy==1.19.5 pyarrow==12.0.1
 RUN cd /bigcodebench && \
     pip install . --no-deps
     
-RUN pip install \
-    appdirs \
-    fire \
-    multipledispatch \
-    pqdm \
-    tempdir \
-    termcolor \
-    tqdm \
-    # tree_sitter \
-    # tree-sitter-python \
-    wget \
-    transformers \
-    datasets \
-    gradio-client \
-    numpy \
-    rich \
-    accelerate \
-    # anthropic \
-    # google-genai \
-    mistralai \
-    # openai \
-    e2b
-
+RUN pip install \  
+    appdirs \  
+    fire \  
+    termcolor \  
+    tqdm \  
+    datasets \  
+    gradio-client \  
+    numpy \  
+    rich  
 RUN pip install -I --timeout 2000 -r https://raw.githubusercontent.com/hydra2025279/bigcodebench/refs/heads/main/Requirements/requirements-eval.txt
 
 # Ensure the numpy version is compatible with the datasets version
