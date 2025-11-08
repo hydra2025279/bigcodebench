@@ -4,7 +4,7 @@ set -e  # Exit on error
   
 echo "Step 1: Building custom Docker image..."  
   
-docker build -f Docker/Evaluate.Dockerfile . -t bigcodebench-custom:latest  
+docker build --no-cache -f Docker/Evaluate.Dockerfile . -t bigcodebench-custom:latest  
   
 # ============================================  
 # STEP 2: Tìm file samples vừa generate  
