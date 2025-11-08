@@ -21,15 +21,16 @@ def _ready_bigcodebench_path(subset="full", version="default") -> str:
         return BIGCODEBENCH_OVERRIDE_PATH
 
     version = BIGCODEBENCH_VERSION if version == "default" else version
-    url, path = get_dataset_metadata(
-        BIGCODEBENCH_VERSION, subset
-    )
-    
-    extra = "-" + subset if subset != "full" else ""
-    dataset = load_dataset(BIGCODEBENCH_HF+extra, split=BIGCODEBENCH_VERSION)
-    make_cache(url, dataset, path)
+    url, path = get_dataset_metadata(version, subset)
 
+    extra = "-" + subset if subset != "full" else ""
+
+    # load toàn bộ dataset, không dùng split HF
+    dataset = load_dataset(BIGCODEBENCH_HF + extra)
+
+    make_cache(url, dataset, path)
     return path
+
 
 
 def get_bigcodebench(
