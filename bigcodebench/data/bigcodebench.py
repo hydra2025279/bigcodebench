@@ -16,53 +16,41 @@ BIGCODEBENCH_OVERRIDE_PATH = os.environ.get("BIGCODEBENCH_OVERRIDE_PATH", None)
 BIGCODEBENCH_HF = "bigcode/bigcodebench"
 BIGCODEBENCH_VERSION = "v0.1.4"
 
+
+SUBSET_TO_HF_SPLIT = {
+    "full": "v0.1.4",  
+    "hard": "v0.1.4",
+}
+
 def _ready_bigcodebench_path(subset="full", version="default") -> str:
     if BIGCODEBENCH_OVERRIDE_PATH:
         return BIGCODEBENCH_OVERRIDE_PATH
 
     version = BIGCODEBENCH_VERSION if version == "default" else version
-    url, path = get_dataset_metadata(
-        BIGCODEBENCH_VERSION, subset
-    )
+    url, path = get_dataset_metadata(version, subset)
+
+    # map subset sang split thực tế trên HF
+    hf_split = SUBSET_TO_HF_SPLIT.get(subset, subset)
+    extra = "-" + subset if subset not in SUBSET_TO_HF_SPLIT else ""
     
-    extra = "-" + subset if subset != "full" else ""
-    dataset = load_dataset(BIGCODEBENCH_HF+extra, split=BIGCODEBENCH_VERSION)
+    dataset = load_dataset(BIGCODEBENCH_HF + extra, split=hf_split)
     make_cache(url, dataset, path)
 
     return path
 
 
-def get_bigcodebench(
-    err_incomplete=True, subset="full", version="default"
-    ) -> Dict[str, Dict]:
-    """Get BigCodeBench from BigCode's github repo and return as a list of parsed dicts.
-
-    Returns:
-        List[Dict[str, str]]: List of dicts with keys "complete_prompt", "instruct_prompt", "canonical_solution", "test", "entry_point"
-
-    Notes:
-        "task_id" is the identifier string for the task.
-        "complete_prompt" is the prompt to be used for BigCodeBench-Complete.
-        "instruct_prompt" is the prompt to be used for BigCodeBench-Instruct.
-        "canonical_solution" is the ground-truth implementation
-        "test" is the `unittest.TestCase` class.
-        "entry_point" is the name of the function.
-    """
-    # Check if open eval file exists in CACHE_DIR
-    data_path = _ready_bigcodebench_path(
-        subset=subset, version=version
-    )
+def get_bigcodebench(err_incomplete=True, subset="full", version="default") -> Dict[str, Dict]:
+    """Get BigCodeBench from BigCode's github repo and return as a dict of parsed tasks."""
+    data_path = _ready_bigcodebench_path(subset=subset, version=version)
     data = {task["task_id"]: task for task in stream_jsonl(data_path)}
     if err_incomplete:
         completeness_check("BigCodeBench", data)
     return data
 
+
 def get_bigcodebench_hash(subset="full", version="default") -> str:
-    """Get the hash of BigCodeBench.
-    Returns:
-        str: The hash of BigCodeBench
-    """
-    data_path = _ready_bigcodebench_path(subset, version="default")
+    """Get the hash of BigCodeBench dataset."""
+    data_path = _ready_bigcodebench_path(subset, version)
     with open(data_path, "rb") as f:
         data = f.read()
     return hashlib.md5(data).hexdigest()
