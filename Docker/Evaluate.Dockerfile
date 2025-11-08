@@ -53,10 +53,10 @@ RUN pip install \
     numpy \
     rich \
     accelerate \
-    anthropic \
-    google-genai \
+    # anthropic \
+    # google-genai \
     mistralai \
-    openai \
+    # openai \
     e2b
 
 RUN pip install -I --timeout 2000 -r https://raw.githubusercontent.com/hydra2025279/bigcodebench/refs/heads/main/Requirements/requirements-eval.txt
