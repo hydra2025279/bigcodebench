@@ -1,5 +1,5 @@
 # Better use newer Python as generated code can use new features
-FROM python:3.10-slim
+FROM python:3.9-slim
 
 # install git, g++ and python3-tk
 RUN apt-get update && apt-get install -y \
