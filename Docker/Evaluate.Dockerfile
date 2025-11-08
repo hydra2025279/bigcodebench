@@ -31,7 +31,7 @@ RUN rm -rf /bigcodebench
 ADD "https://api.github.com/repos/hydra2025279/bigcodebench/commits?per_page=1" latest_commit
 RUN git clone https://github.com/hydra2025279/bigcodebench.git /bigcodebench
 
-RUN pip install numpy==1.24.3 pyarrow==14.0.1
+RUN pip install numpy==1.19.5 pyarrow==12.0.1
 
 RUN cd /bigcodebench && \
     pip install . --no-deps
