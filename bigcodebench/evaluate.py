@@ -17,7 +17,6 @@ import numpy as np
 from termcolor import cprint
 from tqdm import tqdm
 
-from bigcodebench.generate import run_codegen
 from bigcodebench.data import (
     get_bigcodebench,
     get_bigcodebench_hash,
@@ -133,7 +132,9 @@ def evaluate(
     no_gt: bool = False,
     **model_kwargs,
 ):  
+    
     if not samples and model_kwargs:
+        from bigcodebench.generate import run_codegen
         samples = run_codegen(
             split=split,
             subset=subset,
