@@ -14,25 +14,20 @@ from datasets import load_dataset
 
 BIGCODEBENCH_OVERRIDE_PATH = os.environ.get("BIGCODEBENCH_OVERRIDE_PATH", None)
 BIGCODEBENCH_HF = "bigcode/bigcodebench"
-BIGCODEBENCH_VERSION = "v0.1.0_hf"  
+BIGCODEBENCH_VERSION = "v0.1.0"
 
 def _ready_bigcodebench_path(subset="full", version="default") -> str:
     if BIGCODEBENCH_OVERRIDE_PATH:
         return BIGCODEBENCH_OVERRIDE_PATH
 
     version = BIGCODEBENCH_VERSION if version == "default" else version
-    github_version = version.replace("_hf", "")
-    url, path = get_dataset_metadata(github_version, subset)
+    url, path = get_dataset_metadata(
+        BIGCODEBENCH_VERSION, subset
+    )
     
-    if os.path.exists(path):
-        return path
-    
-    try:
-        dataset = load_dataset(BIGCODEBENCH_HF, split=version)
-        make_cache(url, dataset, path, gh=False)
-    except Exception as e:
-        print(f"Failed to load from HuggingFace ({e}), downloading from GitHub instead...")
-        make_cache(url, None, path, gh=True)
+    extra = "-" + subset if subset != "full" else ""
+    dataset = load_dataset(BIGCODEBENCH_HF+extra, split=BIGCODEBENCH_VERSION)
+    make_cache(url, dataset, path)
 
     return path
 
