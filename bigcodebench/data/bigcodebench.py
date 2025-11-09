@@ -14,16 +14,15 @@ from datasets import load_dataset
 
 BIGCODEBENCH_OVERRIDE_PATH = os.environ.get("BIGCODEBENCH_OVERRIDE_PATH", None)
 BIGCODEBENCH_HF = "bigcode/bigcodebench"
-BIGCODEBENCH_VERSION = "v0.1.4"
+BIGCODEBENCH_VERSION = "v0.1.0_hf"  
 
 def _ready_bigcodebench_path(subset="full", version="default") -> str:
     if BIGCODEBENCH_OVERRIDE_PATH:
         return BIGCODEBENCH_OVERRIDE_PATH
 
     version = BIGCODEBENCH_VERSION if version == "default" else version
-    url, path = get_dataset_metadata(
-        BIGCODEBENCH_VERSION, subset
-    )
+    github_version = version.replace("_hf", "")
+    url, path = get_dataset_metadata(github_version, subset)
     
     if os.path.exists(path):
         return path
