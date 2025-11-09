@@ -16,27 +16,16 @@ BIGCODEBENCH_OVERRIDE_PATH = os.environ.get("BIGCODEBENCH_OVERRIDE_PATH", None)
 BIGCODEBENCH_HF = "bigcode/bigcodebench"
 BIGCODEBENCH_VERSION = "v0.1.4"
 
-
-SUBSET_TO_HF_SPLIT = {
-    "full": "v0.1.4",  
-    "hard": "v0.1.4",
-}
-
 def _ready_bigcodebench_path(subset="full", version="default") -> str:
     if BIGCODEBENCH_OVERRIDE_PATH:
         return BIGCODEBENCH_OVERRIDE_PATH
 
     version = BIGCODEBENCH_VERSION if version == "default" else version
     url, path = get_dataset_metadata(version, subset)
-
-    extra = "-" + subset if subset != "full" else ""
-
-    # load toàn bộ dataset, không dùng split HF
-    dataset = load_dataset(BIGCODEBENCH_HF + extra)
-
+    dataset = load_dataset(BIGCODEBENCH_HF, split=version)
     make_cache(url, dataset, path)
-    return path
 
+    return path
 
 
 def get_bigcodebench(err_incomplete=True, subset="full", version="default") -> Dict[str, Dict]:
