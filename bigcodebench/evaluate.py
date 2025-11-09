@@ -11,8 +11,6 @@ from concurrent.futures._base import CancelledError
 from datetime import datetime
 from typing import Any, Dict, List, Tuple, Optional
 from warnings import warn
-from gradio_client import Client, handle_file
-from e2b import Sandbox
 
 import httpx
 import numpy as np
@@ -154,6 +152,7 @@ def evaluate(
         result_path = samples.replace(".jsonl", "_eval_results.json")
     
     if execution == "gradio":
+        from gradio_client import Client, handle_file
         while True:
             try:
                 client = Client(gradio_endpoint)
@@ -181,6 +180,7 @@ def evaluate(
         failed_tasks = pass_at_k["failed_tasks"]
     
     elif execution == "e2b":
+        from e2b import Sandbox
         sandbox = Sandbox(e2b_endpoint, api_key=os.environ["E2B_API_KEY"], timeout=60*60)
 
         # upload file to sandbox
