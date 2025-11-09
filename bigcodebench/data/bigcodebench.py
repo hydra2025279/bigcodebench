@@ -25,9 +25,15 @@ def _ready_bigcodebench_path(subset="full", version="default") -> str:
         BIGCODEBENCH_VERSION, subset
     )
     
-    extra = "-" + subset if subset != "full" else ""
-    dataset = load_dataset(BIGCODEBENCH_HF+extra, split=BIGCODEBENCH_VERSION)
-    make_cache(url, dataset, path)
+    if os.path.exists(path):
+        return path
+    
+    try:
+        dataset = load_dataset(BIGCODEBENCH_HF, split=version)
+        make_cache(url, dataset, path, gh=False)
+    except Exception as e:
+        print(f"Failed to load from HuggingFace ({e}), downloading from GitHub instead...")
+        make_cache(url, None, path, gh=True)
 
     return path
 
