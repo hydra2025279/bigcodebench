@@ -50,13 +50,11 @@ joblib==1.0.1
 threadpoolctl==3.0.0
 geographiclib==1.52
 branca==0.4.2
-numba==0.53.1
 audioread==2.1.9
 pooch==1.6.0
 resampy==0.2.2
 scikit-image==0.17.2
 decorator==4.4.2
-llvmlite==0.36.0
 imageio==2.15.0
 tifffile==2020.9.3
 PyWavelets==1.1.1
